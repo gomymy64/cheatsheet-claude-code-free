@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Материалы к Уроку: Claude Code Бесплатно | Мастодонт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Onest:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090d;
+  --bg2: #0e1018;
+  --bg3: #14161f;
+  --text: #e4e6ed;
+  --text2: #8b8fa3;
+  --text3: #565a6e;
+  --accent1: #00d4aa;
+  --accent2: #7c5cfc;
+  --gradient1: linear-gradient(135deg, var(--accent1), var(--accent2));
+  --gradient2: linear-gradient(135deg, var(--accent1), #00b4d8, var(--accent2));
+  --border: rgba(255,255,255,0.06);
+  --card-bg: rgba(14,16,24,0.8);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: 'Unbounded', cursive;
+  --font-body: 'Onest', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:80px;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* Noise */
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:0.025;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* Glow orbs */
+body::before{content:'';position:fixed;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(0,212,170,0.06),transparent 70%);pointer-events:none;z-index:0;}
+
+/* ═══ NAV ═══ */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,9,13,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:0 clamp(20px,4vw,48px);border-bottom:2px solid transparent;border-image:linear-gradient(90deg,transparent,var(--accent1),var(--accent2),transparent) 1;}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:64px;}
+.nav-brand{font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:0.08em;color:var(--text);}
+.nav-links{display:flex;gap:8px;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;padding:6px 14px;border-radius:8px;transition:all 0.25s;}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05);}
+
+/* ═══ SECTIONS ═══ */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+section{padding:clamp(60px,8vw,100px) 0;}
+
+/* ═══ HERO ═══ */
+.hero{padding:clamp(100px,14vw,160px) 0 clamp(60px,8vw,100px);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(124,92,252,0.08),transparent 60%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.12em;color:var(--accent1);background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);padding:8px 18px;border-radius:100px;margin-bottom:28px;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent1);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:var(--font-display);font-size:clamp(32px,6vw,64px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--text2);max-width:600px;margin-bottom:36px;}
+.hero-yt{display:inline-flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:14px;color:var(--text2);cursor:default;}
+.hero-yt strong{color:var(--text);font-weight:600;}
+.hero-yt .copy-sm{background:var(--gradient1);color:#000;border:none;padding:6px 14px;border-radius:6px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.25s;white-space:nowrap;}
+.hero-yt .copy-sm:hover{transform:scale(1.04);box-shadow:0 4px 20px rgba(0,212,170,0.3);}
+
+/* ═══ CARDS GRID ═══ */
+.stitle{font-family:var(--font-display);font-size:clamp(20px,3vw,28px);font-weight:800;margin-bottom:12px;letter-spacing:-0.01em;}
+.ssub{color:var(--text2);font-size:15px;margin-bottom:36px;}
+
+.learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+.learn-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;position:relative;overflow:hidden;transition:all 0.3s;}
+.learn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient1);opacity:0.7;}
+.learn-card:hover{border-color:rgba(0,212,170,0.2);transform:translateY(-2px);}
+.learn-icon{font-size:24px;margin-bottom:14px;display:block;}
+.learn-card p{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* ═══ TOOLS ═══ */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:12px;transition:all 0.3s;}
+.tool-card:hover{border-color:rgba(124,92,252,0.3);}
+.tool-name{font-family:var(--font-display);font-size:15px;font-weight:700;}
+.tool-desc{font-size:13px;color:var(--text2);line-height:1.5;flex:1;}
+.tool-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.tool-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:rgba(0,212,170,0.1);color:var(--accent1);white-space:nowrap;}
+.tool-badge.paid{background:rgba(245,158,11,0.1);color:#f59e0b;}
+.tool-link{font-size:12px;font-weight:600;color:var(--accent2);text-decoration:none;transition:color 0.2s;}
+.tool-link:hover{color:var(--accent1);}
+
+/* ═══ MODEL TABLE ═══ */
+.model-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);}
+.model-table{width:100%;border-collapse:collapse;font-size:14px;}
+.model-table th{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);background:var(--bg3);padding:14px 20px;text-align:left;white-space:nowrap;}
+.model-table td{padding:14px 20px;border-top:1px solid var(--border);background:var(--bg2);white-space:nowrap;}
+.model-table tr:hover td{background:var(--bg3);}
+.price-free{color:var(--accent1);font-weight:600;}
+.price-cheap{color:#00b4d8;font-weight:500;}
+.price-mid{color:#f59e0b;font-weight:500;}
+.perf-high{color:var(--accent1);}
+.perf-mid{color:#00b4d8;}
+
+/* ═══ STEPS ═══ */
+.step-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(28px,4vw,40px);margin-bottom:20px;position:relative;overflow:hidden;transition:all 0.3s;}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient1);}
+.step-card::after{content:attr(data-num);position:absolute;top:16px;right:24px;font-family:var(--font-display);font-size:clamp(48px,6vw,72px);font-weight:900;color:rgba(255,255,255,0.02);line-height:1;pointer-events:none;}
+.step-header{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;}
+.step-num{font-family:var(--font-display);font-size:clamp(14px,2vw,16px);font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
+.step-title{font-family:var(--font-display);font-size:clamp(16px,2.5vw,20px);font-weight:700;}
+.step-desc{color:var(--text2);font-size:14px;margin-bottom:18px;max-width:700px;}
+.step-actions{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.step-action{font-size:14px;padding-left:20px;position:relative;color:var(--text);}
+.step-action::before{content:'▸';position:absolute;left:0;color:var(--accent1);font-weight:700;}
+.step-action a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(124,92,252,0.3);transition:border-color 0.2s;}
+.step-action a:hover{border-color:var(--accent2);}
+
+/* Settings & tips */
+.step-settings{background:rgba(124,92,252,0.06);border:1px solid rgba(124,92,252,0.15);border-radius:var(--radius-sm);padding:14px 18px;margin-top:12px;font-size:13px;color:var(--text2);}
+.step-settings strong{color:var(--text);font-weight:600;}
+.step-tip{background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.15);border-radius:var(--radius-sm);padding:14px 18px;margin-top:10px;font-size:13px;color:var(--text2);}
+.step-tip::before{content:'💡 ';font-size:14px;}
+
+/* Command block */
+.cmd-block{background:var(--bg);border:1px solid var(--border);border-left:3px solid;border-image:var(--gradient1) 1;border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:16px 20px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative;box-shadow:0 4px 24px rgba(0,212,170,0.04);}
+.cmd-label{font-size:11px;font-weight:600;color:var(--accent1);letter-spacing:0.08em;font-family:var(--font-display);margin-bottom:6px;}
+.cmd-text{font-family:var(--font-mono);font-size:14px;color:var(--text);white-space:pre-wrap;word-break:break-all;flex:1;}
+.copy-btn{background:rgba(255,255,255,0.06);color:var(--text2);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.25s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.copy-btn:hover{background:rgba(255,255,255,0.1);color:var(--text);border-color:rgba(255,255,255,0.15);}
+.copy-btn.copied{background:rgba(0,212,170,0.15);color:var(--accent1);border-color:rgba(0,212,170,0.3);}
+
+/* ═══ NOTES ═══ */
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
+.note-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;display:flex;gap:14px;align-items:flex-start;transition:all 0.3s;}
+.note-card:hover{border-color:rgba(255,255,255,0.1);}
+.note-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.note-text{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* ═══ LINKS ═══ */
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+.link-card{display:flex;align-items:center;gap:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;text-decoration:none;transition:all 0.3s;}
+.link-card:hover{border-color:rgba(0,212,170,0.3);transform:translateY(-2px);}
+.link-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,212,170,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.link-name{font-size:14px;font-weight:600;color:var(--text);}
+.link-url{font-size:12px;color:var(--accent2);font-family:var(--font-mono);}
+
+/* ═══ CTA ═══ */
+.cta-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(40px,6vw,60px) clamp(30px,8vw,100px);display:flex;justify-content:space-between;align-items:center;gap:40px;position:relative;overflow:hidden;animation:ctaGlow 3s ease-in-out infinite;}
+@keyframes ctaGlow{0%,100%{box-shadow:0 0 40px rgba(0,212,170,0.04)}50%{box-shadow:0 0 60px rgba(0,212,170,0.1),0 0 100px rgba(124,92,252,0.05)}}
+.cta-text{font-family:var(--font-display);font-size:clamp(18px,2.5vw,24px);font-weight:700;line-height:1.35;max-width:500px;}
+.cta-text span{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-btn{background:var(--gradient1);color:#000;font-family:var(--font-display);font-size:14px;font-weight:700;padding:18px 40px;border-radius:var(--radius-sm);text-decoration:none;white-space:nowrap;transition:all 0.3s;flex-shrink:0;}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,170,0.3);}
+
+/* ═══ FOOTER ═══ */
+footer{padding:40px 0;border-top:1px solid var(--border);}
+.footer-inner{max-width:var(--max-w);margin:0 auto;padding:0 clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-brand{font-family:var(--font-display);font-size:13px;font-weight:800;letter-spacing:0.08em;}
+.footer-tagline{font-size:13px;color:var(--text3);}
+.footer-yt{font-size:12px;color:var(--text2);cursor:pointer;text-decoration:none;transition:color 0.2s;}
+.footer-yt:hover{color:var(--accent1);}
+
+/* ═══ ANIMATIONS ═══ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:0.1s}.reveal-d2{transition-delay:0.2s}.reveal-d3{transition-delay:0.3s}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .learn-grid,.tools-grid{grid-template-columns:1fr;}
+  .notes-grid{grid-template-columns:1fr;}
+  .links-grid{grid-template-columns:1fr;}
+  .cta-card{flex-direction:column;text-align:center;padding:40px 24px;}
+  .hero-yt{flex-direction:column;align-items:flex-start;}
+  .footer-inner{flex-direction:column;text-align:center;}
+  .model-table{font-size:13px;}
+  .model-table th,.model-table td{padding:10px 14px;}
+}
+@media(min-width:2560px){
+  :root{--max-w:1400px;}
+  body{font-size:18px;}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--gradient1);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+  <div class="nav-brand">МАСТОДОНТ</div>
+  <div class="nav-links">
+    <a href="#tools">Инструменты</a>
+    <a href="#steps">Шаги</a>
+    <a href="#links">Ссылки</a>
+  </div>
+</div>
+</nav>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">МАТЕРИАЛЫ К УРОКУ</div>
+  <h1>Claude Code бесплатно навсегда</h1>
+  <p class="hero-sub">Настройка Claude Code для работы через OpenRouter с бесплатными и дешёвыми моделями</p>
+  <div class="hero-yt">
+    <span>Ищи на YouTube: <strong>"Как использовать Claude Code БЕСПЛАТНО навсегда"</strong></span>
+    <button class="copy-sm" onclick="copyText('Как использовать Claude Code БЕСПЛАТНО навсегда',this)">Скопировать</button>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section>
+  <h2 class="stitle reveal">Что ты научишься делать</h2>
+  <div class="learn-grid">
+    <div class="learn-card reveal"><span class="learn-icon">⚡</span><p>Подключить Claude Code к бесплатным и дешёвым моделям через OpenRouter</p></div>
+    <div class="learn-card reveal reveal-d1"><span class="learn-icon">🔄</span><p>Переключаться между моделями одним промптом</p></div>
+    <div class="learn-card reveal reveal-d2"><span class="learn-icon">🧩</span><p>Использовать Claude Skills на любой модели - не только Claude</p></div>
+    <div class="learn-card reveal reveal-d3"><span class="learn-icon">↩️</span><p>Вернуться обратно на Claude в любой момент</p></div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <h2 class="stitle reveal">Что понадобится</h2>
+  <p class="ssub reveal">Все инструменты бесплатные или имеют бесплатный тариф</p>
+  <div class="tools-grid">
+    <div class="tool-card reveal">
+      <div class="tool-name">Claude Code</div>
+      <div class="tool-desc">CLI-инструмент для кодинга с ИИ в терминале</div>
+      <div class="tool-meta">
+        <span class="tool-badge paid">нужна подписка Pro/Max или API</span>
+        <a href="https://claude.com/download" target="_blank" class="tool-link">claude.com/download ↗</a>
+      </div>
+    </div>
+    <div class="tool-card reveal reveal-d1">
+      <div class="tool-name">Antigravity</div>
+      <div class="tool-desc">IDE с встроенным агентом и терминалом</div>
+      <div class="tool-meta">
+        <span class="tool-badge">бесплатно</span>
+        <a href="https://antigravity.google/download" target="_blank" class="tool-link">antigravity.google ↗</a>
+      </div>
+    </div>
+    <div class="tool-card reveal reveal-d2">
+      <div class="tool-name">OpenRouter</div>
+      <div class="tool-desc">Единый API-шлюз к сотням моделей</div>
+      <div class="tool-meta">
+        <span class="tool-badge">бесплатные модели есть</span>
+        <a href="https://openrouter.ai" target="_blank" class="tool-link">openrouter.ai ↗</a>
+      </div>
+    </div>
+    <div class="tool-card reveal reveal-d3">
+      <div class="tool-name">Конфигуратор моделей</div>
+      <div class="tool-desc">Выбор модели + копирование промпта</div>
+      <div class="tool-meta">
+        <span class="tool-badge">бесплатно</span>
+        <a href="https://claude-code-models.vercel.app" target="_blank" class="tool-link">claude-code-models.vercel.app ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS TABLE -->
+<section>
+  <h2 class="stitle reveal">Сравнение моделей</h2>
+  <p class="ssub reveal">Цена и производительность - выбери свой баланс</p>
+  <div class="model-table-wrap reveal">
+    <table class="model-table">
+      <thead><tr><th>Модель</th><th>Цена за 1M токенов</th><th>Производительность</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Opus 4.6</td><td class="price-mid">~$15</td><td class="perf-high">10/10</td></tr>
+        <tr><td>Claude Sonnet 4.6</td><td class="price-mid">~$9</td><td class="perf-high">9.2/10</td></tr>
+        <tr><td>Gemini 3 Flash</td><td class="price-cheap">~$1.75</td><td class="perf-mid">8.5/10</td></tr>
+        <tr><td>Devstral Small</td><td class="price-cheap">~$0.20</td><td class="perf-mid">7/10</td></tr>
+        <tr><td>Qwen3 Coder</td><td class="price-free">Бесплатно</td><td class="perf-mid">7.2/10</td></tr>
+        <tr><td>DeepSeek V3</td><td class="price-free">Бесплатно</td><td class="perf-mid">8.3/10</td></tr>
+        <tr><td>Free Router</td><td class="price-free">Бесплатно (ротация)</td><td class="perf-mid">~7/10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <h2 class="stitle reveal">Пошаговая инструкция</h2>
+  <p class="ssub reveal">7 шагов от нуля до бесплатного Claude Code</p>
+
+  <!-- STEP 1 -->
+  <div class="step-card reveal" data-num="01">
+    <div class="step-header"><span class="step-num">ШАГ 01</span><span class="step-title">Открой конфигуратор моделей</span></div>
+    <p class="step-desc">Заходишь на наш сайт, выбираешь модель - и получаешь готовый промпт для настройки Claude Code.</p>
+    <div class="step-actions">
+      <div class="step-action">Открой <a href="https://claude-code-models.vercel.app" target="_blank">claude-code-models.vercel.app</a></div>
+      <div class="step-action">Выбери вкладку <strong>"Set-up Code"</strong></div>
+      <div class="step-action">Выбери модель (например <strong>Gemini 3 Flash</strong> - 85% качества Claude за 10% цены)</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card reveal" data-num="02">
+    <div class="step-header"><span class="step-num">ШАГ 02</span><span class="step-title">Получи API-ключ OpenRouter</span></div>
+    <p class="step-desc">Регистрируешься на OpenRouter и создаёшь ключ. Совет - положи $10 на баланс, это снимает рейт-лимиты даже для бесплатных моделей.</p>
+    <div class="step-actions">
+      <div class="step-action">Зайди на <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></div>
+      <div class="step-action">Нажми <strong>Create API Key</strong></div>
+      <div class="step-action">Дай имя ключу (например "free claude")</div>
+    </div>
+    <div class="step-settings">⚙️ <strong>Настройки:</strong> Credit limit → $15, Reset limit → Monthly, Expiration → оставь как есть</div>
+    <div class="step-tip">Положи $10 на баланс - даже для бесплатных моделей это убирает задержки и рейт-лимиты.</div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card reveal" data-num="03">
+    <div class="step-header"><span class="step-num">ШАГ 03</span><span class="step-title">Скопируй промпт и вставь в Antigravity</span></div>
+    <p class="step-desc">На конфигураторе уже готов промпт для выбранной модели. Копируешь и вставляешь в чат агента Antigravity - он сам настроит файл settings.json.</p>
+    <div class="step-actions">
+      <div class="step-action">На конфигураторе нажми кнопку <strong>Copy</strong></div>
+      <div class="step-action">Открой <strong>Antigravity</strong> → окно агента (чат)</div>
+      <div class="step-action">Вставь скопированный промпт в чат</div>
+      <div class="step-action">Агент сам изменит <code>~/.claude/settings.json</code></div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card reveal" data-num="04">
+    <div class="step-header"><span class="step-num">ШАГ 04</span><span class="step-title">Проверь в терминале Antigravity</span></div>
+    <p class="step-desc">Настройки загружаются только при старте Claude Code. Открываешь терминал прямо в Antigravity и запускаешь claude.</p>
+    <div class="step-actions">
+      <div class="step-action">В Antigravity: вверху нажми <strong>Terminal → New Terminal</strong></div>
+      <div class="step-action">Набери <code>claude</code></div>
+      <div class="step-action">В строке старта должна отобразиться выбранная модель</div>
+      <div class="step-action">Если нет - закрой терминал полностью и открой новый</div>
+    </div>
+    <div class="cmd-block">
+      <div><div class="cmd-label">⌨️ КОМАНДА</div><div class="cmd-text">claude</div></div>
+      <button class="copy-btn" onclick="copyText('claude',this)">📋 Скопировать</button>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step-card reveal" data-num="05">
+    <div class="step-header"><span class="step-num">ШАГ 05</span><span class="step-title">Проверь что работает</span></div>
+    <p class="step-desc">Убедись что Claude Code подключился к нужной модели.</p>
+    <div class="step-actions">
+      <div class="step-action">Спроси: <strong>"What model is this?"</strong> - модель назовёт себя</div>
+      <div class="step-action">Попробуй создать что-нибудь (например попроси сгенерировать сайт)</div>
+      <div class="step-action">Все скиллы Claude Code (команды через <code>/</code>) работают с любой моделью</div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step-card reveal" data-num="06">
+    <div class="step-header"><span class="step-num">ШАГ 06</span><span class="step-title">Как переключить модель</span></div>
+    <p class="step-desc">Хочешь попробовать другую модель? Не нужно заново всё настраивать.</p>
+    <div class="step-actions">
+      <div class="step-action">На конфигураторе выбери вкладку <strong>"Change Code"</strong></div>
+      <div class="step-action">Выбери другую модель → нажми <strong>Copy</strong></div>
+      <div class="step-action">Вставь в Claude Code → перезапусти терминал</div>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step-card reveal" data-num="07">
+    <div class="step-header"><span class="step-num">ШАГ 07</span><span class="step-title">Как вернуться на Claude</span></div>
+    <p class="step-desc">Наигрался с бесплатными моделями и хочешь обратно на Claude? Один клик.</p>
+    <div class="step-actions">
+      <div class="step-action">На конфигураторе нажми на карточку <strong>"Claude"</strong></div>
+      <div class="step-action">Скопируй промпт отката (он удалит настройки OpenRouter)</div>
+      <div class="step-action">Вставь в Claude Code → перезапусти терминал - снова Opus/Sonnet</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section>
+  <h2 class="stitle reveal">Важно знать</h2>
+  <div class="notes-grid" style="margin-top:24px;">
+    <div class="note-card reveal"><span class="note-icon">⚠️</span><div class="note-text">Для клиентских проектов используй только Claude (Opus/Sonnet) - безопасность данных</div></div>
+    <div class="note-card reveal reveal-d1"><span class="note-icon">🇨🇳</span><div class="note-text">DeepSeek хранит данные в Китае - учитывай если работаешь с чувствительными данными</div></div>
+    <div class="note-card reveal reveal-d2"><span class="note-icon">🔄</span><div class="note-text">Free Router - ротация по бесплатным моделям, удобнее чем привязка к одной</div></div>
+    <div class="note-card reveal"><span class="note-icon">⚙️</span><div class="note-text">settings.json можно менять глобально (~/.claude/settings.json) или на уровне проекта</div></div>
+    <div class="note-card reveal reveal-d1"><span class="note-icon">💰</span><div class="note-text">Если можешь себе позволить - бери Claude Max ($200/мес), это как мини-цифровой сотрудник</div></div>
+  </div>
+</section>
+
+<!-- LINKS -->
+<section id="links">
+  <h2 class="stitle reveal">Все ссылки</h2>
+  <div class="links-grid" style="margin-top:24px;">
+    <a href="https://claude-code-models.vercel.app" target="_blank" class="link-card reveal"><div class="link-icon">⚙️</div><div><div class="link-name">Конфигуратор моделей</div><div class="link-url">claude-code-models.vercel.app</div></div></a>
+    <a href="https://claude.com/download" target="_blank" class="link-card reveal reveal-d1"><div class="link-icon">🤖</div><div><div class="link-name">Claude Code (скачать)</div><div class="link-url">claude.com/download</div></div></a>
+    <a href="https://antigravity.google/download" target="_blank" class="link-card reveal reveal-d2"><div class="link-icon">🚀</div><div><div class="link-name">Antigravity (скачать)</div><div class="link-url">antigravity.google/download</div></div></a>
+    <a href="https://openrouter.ai" target="_blank" class="link-card reveal"><div class="link-icon">🔗</div><div><div class="link-name">OpenRouter</div><div class="link-url">openrouter.ai</div></div></a>
+    <a href="https://openrouter.ai/keys" target="_blank" class="link-card reveal reveal-d1"><div class="link-icon">🔑</div><div><div class="link-name">OpenRouter API ключи</div><div class="link-url">openrouter.ai/keys</div></div></a>
+    <a href="https://openrouter.ai/models" target="_blank" class="link-card reveal reveal-d2"><div class="link-icon">📦</div><div><div class="link-name">Все модели OpenRouter</div><div class="link-url">openrouter.ai/models</div></div></a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="cta-card reveal">
+    <div class="cta-text">Пошаговый план по&nbsp;выходу<br>на&nbsp;первые <span>100к в&nbsp;ИИ</span> в&nbsp;2026</div>
+    <a href="https://t.me/mastodont_aibot?start=agency" target="_blank" class="cta-btn">ЗАБРАТЬ ПЛАН</a>
+  </div>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+  <div class="footer-brand">МАСТОДОНТ</div>
+  <div class="footer-tagline">AI и нейросети - просто, по делу</div>
+  <span class="footer-yt" onclick="copyText('@aiBoomb',this)" title="Скопировать">YouTube: @aiBoomb</span>
+</div>
+</footer>
+
+<script>
+// Reveal on scroll
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('vis');obs.unobserve(el.target)}})},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Copy
+function copyText(t,btn){
+  navigator.clipboard.writeText(t).then(()=>{
+    const orig=btn.textContent;
+    btn.textContent='✓ Скопировано!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>
